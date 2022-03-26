@@ -2,8 +2,9 @@ import React from 'react'
 import {Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import logo from '../infodev.png';
 import styles from '../Styles/Dashboard.module.css';
+import { RoleSetup } from './RoleSetup';
 import { UserSetup } from './UserSetup';
-export const Dashboard = ({setUserModal}) => {
+export const Dashboard = ({setUserModal,setRoleModal}) => {
 
     
 
@@ -22,7 +23,7 @@ export const Dashboard = ({setUserModal}) => {
                     <div className="sidenav" style={{'display':'flex','flexDirection':'column'}}>
                         <button className={styles.button} onClick={()=>navigate(`/dashboard`)}>Home</button>
                         <button className={styles.button}>Screen Setup</button>
-                        <button className={styles.button}>Role Setup</button>
+                        <button className={styles.button} onClick={()=>navigate(`/dashboard/rolesetup`)}>Role Setup</button>
                         <button className={styles.button}  onClick={()=>navigate(`/dashboard/usersetup`)}>User Setup</button>
                         <button className={styles.button}>Privilege Setup</button>
                     </div>
@@ -32,6 +33,7 @@ export const Dashboard = ({setUserModal}) => {
             <Routes>
             <Route path='/' element={<h1 style={{display:'flex',justifyContent:'center','alignItems':'center'}}>Dashboard is under construction</h1>}/>
             <Route path='usersetup' element={<UserSetup setUserModal={setUserModal}/>}/>
+            <Route path='rolesetup' element={<RoleSetup setRoleModal={setRoleModal}/>}/>
             </Routes>
             
                 

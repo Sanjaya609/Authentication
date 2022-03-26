@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { MdModeEditOutline } from 'react-icons/md';
-import { FiSettings } from 'react-icons/fi';
-
+import {AiFillDelete} from 'react-icons/ai';
 const baseURL = "https://ecom-react-task.herokuapp.com";
 
 
@@ -28,6 +27,13 @@ export const UserSetup = ({setUserModal}) => {
     setUserModal(true);
   }
 
+  const DeleteUser=async(id)=>{
+    await axios({
+      method: 'delete',
+      url: `${baseURL}/user/${id}`,
+      headers: { 'Authorization': 'Bearer ' + accessToken },
+    });
+  };
 
   return (
     <div style={{padding:'1rem'}}>
@@ -56,7 +62,7 @@ export const UserSetup = ({setUserModal}) => {
               <th scope="row">{item.id}</th>
               <td>{item.name}</td>
               <td>{item.email}</td>
-              <td><MdModeEditOutline /><FiSettings /></td>
+              <td><MdModeEditOutline /><AiFillDelete onClick={()=>DeleteUser(item.id)}/></td>
             </tr>
           )}
         </tbody>
