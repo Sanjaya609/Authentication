@@ -1,37 +1,26 @@
-import React from 'react'
-import { Button, Container, Form } from 'react-bootstrap'
+import React, {useState } from 'react'
+import { Route, Router, Routes } from 'react-router-dom';
+import { Dashboard } from '../Components/Dashboard';
+import { LoginForm } from '../Components/LoginForm';
+import { Addusermodal } from '../Components/Modal/Addusermodal';
+import { UserSetup } from '../Components/UserSetup';
 
 export const Login = () => {
-    return (
-        <div className="container" style={{ padding: "5rem" }}>
-            <div className="row" style={{ 'display': 'flex', 'justifyContent': "center" }}>
-                <div className="login-form col-md-5 shadow p-3 mb-5 bg-white rounded" style={{ background: "blueviolet" }}>
-                    <div className="row">
-                        <h3 style={{ 'textAlign': 'center', 'padding': '1rem' }}>Login</h3></div>
-                    <div className="row">
-                        <form>
-                            <div className="form-group">
-                                <label for="email">Email address</label>
-                                <input
-                                type="email" 
-                                className="form-control" 
-                                id="email" 
-                                aria-describedby="emailHelp" 
-                                placeholder="Enter email"/>
-                            </div>
-                            <div className="form-group" style={{'padding':'1rem 0 1rem 0'}}>
-                                <label for="password">Password</label>
-                                <input 
-                                type="password" 
-                                className="form-control" 
-                                id="password" 
-                                placeholder="Password"/>
-                            </div>
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </form></div>
-                </div>
-            </div>
+    // const [accessToken,setAccessToken]= useState(null);
+    // useEffect(()=>{
+    //     const token=localStorage.getItem('access_token');
+    //     setAccessToken(token);
+    // })
+    const [userModal,setUserModal]= useState(false);
 
-        </div>
+    return (
+        <>{userModal?<Addusermodal userModal={userModal} setUserModal={setUserModal}/>:null}
+        <Routes>
+            <Route path='/' element={<LoginForm/>} />
+            <Route path='/dashboard/*' element={<Dashboard  setUserModal={setUserModal} />}>
+                <Route path='usersetup' element={<UserSetup />}/>   
+            </Route>
+        </Routes></>
+        
     )
-}
+};
