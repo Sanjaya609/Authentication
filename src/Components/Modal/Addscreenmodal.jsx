@@ -1,44 +1,44 @@
-
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap';
+import { BaseURL } from '../BaseUrl';
 
-const initialValues = {
-  name: "",
-  description:"",
+const initialValues={
+    name:"",
+    description:"",
+};
+export const Addscreenmodal = ({screenModal,setScreenModal,fetchScreen}) => {
 
-}
-const baseURL = "https://ecom-react-task.herokuapp.com";
-export const Addrolemodal = ({ roleModal, setRoleModal,fetchRoles }) => {
-  const { values, error, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    onSubmit: (values, { resetForm }) => {
-        console.log(values);
-        createRole(values);
-        resetForm();
-        setRoleModal(false);
+    const { values, error, handleChange, handleSubmit } = useFormik({
+        initialValues,
+        onSubmit: (values, { resetForm }) => {
+            console.log(values);
+            createScreen(values);
+            resetForm();
+            setScreenModal(false);
+        }
+    });
+    const createScreen=async (values)=>{
+      const accessToken=localStorage.getItem('access_token');
+      if (values.name && values.description) {
+         await axios({
+            method: 'post',
+            url: `${BaseURL}/screens`,
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            data: {
+                name:`${values.name}`,
+                description:`${values.description}`,
+            },
+        })
     }
-});
-const createRole=async (values)=>{
-  const accessToken=localStorage.getItem('access_token');
-  if (values.name && values.description) {
-     await axios({
-        method: 'post',
-        url: `${baseURL}/roles`,
-        headers: { 'Authorization': 'Bearer ' + accessToken },
-        data: {
-            name:`${values.name}`,
-            description:`${values.description}`,
-        },
-    })
-}
-fetchRoles();};
+    fetchScreen();
+};
 
   return (
-    <Modal show={roleModal} onHide={() => setRoleModal(false)}>
+    <Modal show={screenModal} onHide={() => setScreenModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Add Role</Modal.Title>
+        <Modal.Title>Add Screen</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit}>
@@ -72,4 +72,3 @@ fetchRoles();};
     </Modal>
   )
 }
-

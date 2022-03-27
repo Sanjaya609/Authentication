@@ -2,9 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
+import { BaseURL } from './BaseUrl';
 
-
-const baseURL = "https://ecom-react-task.herokuapp.com";
 const initialValues = {
     email: "",
     password: "",
@@ -22,10 +21,11 @@ export const LoginForm = () => {
 
     const callApi = async (values) => {
         // console.log(values.email,values.password)
+
         if (values.email && values.password) {
             const response = await axios({
                 method: 'post',
-                url: `${baseURL}/auth/login`,
+                url: `${BaseURL}/auth/login`,
                 data: {
                     email: `${values.email}`,
                     password: `${values.password}`,
@@ -35,7 +35,7 @@ export const LoginForm = () => {
             if (response?.data?.success) {
                 const accessToken = response.data.data.token;
                 localStorage.setItem('access_token', accessToken);
-                navigate(`/dashboard`);
+                navigate(`/dashboard/home`);
             } else {
                 navigate(`/`);
             }
@@ -58,7 +58,8 @@ export const LoginForm = () => {
                                     aria-describedby="emailHelp"
                                     placeholder="Enter email"
                                     value={values.email}
-                                    onChange={handleChange} />
+                                    onChange={handleChange}
+                                     />
                             </div>
                             <div className="form-group" style={{ 'padding': '1rem 0 1rem 0' }}>
                                 <label htmlFor="password">Password</label>

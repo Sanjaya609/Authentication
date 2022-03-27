@@ -11,12 +11,13 @@ const initialValues = {
 
 }
 const baseURL = "https://ecom-react-task.herokuapp.com";
-export const Addusermodal = ({ userModal, setUserModal }) => {
+export const Addusermodal = ({ userModal, setUserModal,fetchUser}) => {
   const { values, error, handleChange, handleSubmit } = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
         console.log(values);
         createUser(values);
+        setUserModal(false);
         resetForm();
     }
 });
@@ -33,7 +34,8 @@ const createUser=async (values)=>{
             password: `${values.password}`,
         },
     })
-}};
+}
+fetchUser();};
 
   return (
     <Modal show={userModal} onHide={() => setUserModal(false)}>

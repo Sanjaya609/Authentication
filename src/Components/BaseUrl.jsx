@@ -1,0 +1,1 @@
+export const BaseURL="https://ecom-react-task.herokuapp.com";

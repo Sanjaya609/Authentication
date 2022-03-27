@@ -1,26 +1,26 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { MdModeEditOutline } from 'react-icons/md';
-import {AiFillDelete} from 'react-icons/ai';
+import {AiFillDelete,AiFillSetting} from 'react-icons/ai';
 const baseURL = "https://ecom-react-task.herokuapp.com";
 
 
-export const UserSetup = ({setUserModal}) => {
+export const UserSetup = ({setUserModal,setUserRoleModal,users,setUserToMap,fetchUser}) => {
   //console.log(setAddUserModal);
   
-  const [users, setUsers] = useState();
+  //const [users, setUsers] = useState();
   const accessToken = localStorage.getItem('access_token');
-  const fetchUser = async () => {
-    const response = await axios({
-      method: 'get',
-      url: `${baseURL}/user`,
-      headers: { 'Authorization': 'Bearer ' + accessToken },
-    });
-    setUsers(response?.data?.data);
-  }
-  useEffect(() => {
-    fetchUser()
-  }, [setUsers]);
+  // const fetchUser = async () => {
+  //   const response = await axios({
+  //     method: 'get',
+  //     url: `${baseURL}/user`,
+  //     headers: { 'Authorization': 'Bearer ' + accessToken },
+  //   });
+  //   setUsers(response?.data?.data);
+  // }
+  // useEffect(() => {
+  //   fetchUser()
+  // }, [setUsers]);
 
   const handleModal=()=>{
     //console.log(setUserModal);
@@ -33,7 +33,13 @@ export const UserSetup = ({setUserModal}) => {
       url: `${baseURL}/user/${id}`,
       headers: { 'Authorization': 'Bearer ' + accessToken },
     });
+    fetchUser();
   };
+
+  const UserRoleModal=(name)=>{
+    setUserRoleModal(true);
+    setUserToMap(name);
+  }
 
   return (
     <div style={{padding:'1rem'}}>
@@ -62,7 +68,8 @@ export const UserSetup = ({setUserModal}) => {
               <th scope="row">{item.id}</th>
               <td>{item.name}</td>
               <td>{item.email}</td>
-              <td><MdModeEditOutline /><AiFillDelete onClick={()=>DeleteUser(item.id)}/></td>
+              <td><MdModeEditOutline /><AiFillDelete onClick={()=>DeleteUser(item.id)}/>
+              <AiFillSetting onClick={()=>UserRoleModal(item.name)}/></td>
             </tr>
           )}
         </tbody>
